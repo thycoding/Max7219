@@ -60,7 +60,7 @@ namespace max7219_matrix {
     /**
     * Rotation/reverse order options for 4-in-1 MAX7219 modules
     */
-    //% block="Rotate matrix display $rotation|Reverse printing order $reversed" rotation.defl=rotation_direction.none group="1. Setup" blockExternalInputs=true advanced=true
+    //% block="Rotate matrix display $rotation|Reverse printing order $reversed" rotation.defl=rotation_direction.none group="1. Setup" blockExternalInputs=true 
     export function for_4_in_1_modules(rotation: rotation_direction, reversed: boolean) {
         _rotation = rotation
         _reversed = reversed
