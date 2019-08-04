@@ -252,7 +252,6 @@ namespace max7219_matrix {
         }
     }
 
-
     /**
     * Set brightness level of LEDs on all MAX7219s
     */
@@ -260,7 +259,6 @@ namespace max7219_matrix {
     export function brightnessAll(level: number) {
         _registerAll(_INTENSITY, level)
     }
-
 
     /**
     * Turn on all LEDs on all MAX7219s
@@ -270,119 +268,12 @@ namespace max7219_matrix {
         for (let i = 0; i < 8; i++) _registerAll(_DIGIT[i], 255)
     }
 
-
     /**
     * Turn off LEDs on all MAX7219s
     */
     //% block="Clear all LEDs" group="3. Basic light control"
     export function clearAll() {
         for (let i = 0; i < 8; i++) _registerAll(_DIGIT[i], 0)
-    }
-
-
-    /**
-    * Set LEDs of all MAX7219s to a pattern from a 8x8 matrix variable (index 0=farthest on the chain)
-    */
-    //% block="Display 8x8 pattern $newMatrix on all matrixs" group="4. Set custom LED pattern on matrixs" advanced=true
-    export function displayLEDsToAll(newMatrix: number[][]) {
-        let columnValue = 0
-        if (newMatrix != null) {
-            if (_rotation != rotation_direction.none) newMatrix = _rotateMatrix(newMatrix) // rotate matrix if needed
-            for (let i = 0; i < 8; i++) {
-                if (newMatrix[i] != null) {
-                    columnValue = 0
-                    for (let j = 0; j < 8; j++) {
-                        if (newMatrix[i][j]) {
-                            // combine row 0-7 status into a byte number (0-255)
-                            columnValue += 2 ** j
-                        }
-                    }
-                    _registerAll(_DIGIT[i], columnValue)
-                }
-            }
-        }
-    }
-
-    /**
-    * Set LEDs of a specific MAX7219s to a pattern from a 8x8 number matrix variable (index 0=farthest on the chain)
-    */
-    //% block="Display 8x8 pattern $newMatrix|on matrix index = $index" index.min=0 blockExternalInputs=true group="4. Set custom LED pattern on matrixs"
-    export function displayLEDsForOne(newMatrix: number[][], index: number) {
-        let columnValue = 0
-        if (newMatrix != null) {
-            if (_rotation != rotation_direction.none) newMatrix = _rotateMatrix(newMatrix) // rotate matrix if needed
-            for (let i = 0; i < 8; i++) {
-                if (newMatrix[i] != null) {
-                    columnValue = 0
-                    for (let j = 0; j < 8; j++) {
-                        if (newMatrix[i][j]) {
-                            // combine row 0-7 status into a byte number (0-255)
-                            columnValue += 2 ** j
-                        }
-                    }
-                    _registerForOne(_DIGIT[i], columnValue, index)
-                }
-            }
-        }
-    }
-
-    /**
-    * Return a empty 8x8 number matrix variable
-    */
-    //% block="Empty 8x8 pattern" group="4. Set custom LED pattern on matrixs"
-    export function getEmptyMatrix() {
-        return [
-            [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0],
-        ]
-    }
-
-    /**
-    * Return a full 8x8 number matrix variable
-    */
-    //% block="Full 8x8 pattern" group="4. Set custom LED pattern on matrixs" advanced=true
-    export function getFullMatrix() {
-        return [
-            [1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1],
-        ]
-    }
-
-    /**
-    * Return a specific value from a 8x8 number matrix variable
-    */
-    //% block="Get value from 8x8 pattern %matrix|x = $x y = $y" x.min=0 x.max=7 y.min=0 y.max=7 group="4. Set custom LED pattern on matrixs" blockExternalInputs=true advanced=true
-    export function getValueFromMatrix(matrix: number[][], x: number, y: number) {
-        return matrix[x][y]
-    }
-
-    /**
-    * Set a specific value in a 8x8 number matrix variable
-    */
-    //% block="Set 8x8 pattern %matrix|x = $x y = $y value to $value" value.min=0 value.max=1 x.min=0 x.max=7 y.min=0 y.max=7 group="4. Set custom LED pattern on matrixs" blockExternalInputs=true
-    export function setValueInMatrix(matrix: number[][], x: number, y: number, value: number) {
-        matrix[x][y] = value
-    }
-
-    /**
-    * Toggle (between 0/1) a specific value in a 8x8 number matrix variable
-    */
-    //% block="Toogle value in 8x8 pattern %matrix|x = $x y = $y" x.min=0 x.max=7 y.min=0 y.max=7 group="4. Set custom LED pattern on matrixs" blockExternalInputs=true advanced=true
-    export function toogleValueInMatrix(matrix: number[][], x: number, y: number) {
-        if (matrix[x][y] == 1) matrix[x][y] = 0
-        else if (matrix[x][y] == 0) matrix[x][y] = 1
     }
 
     // ASCII fonts borrowed from https://github.com/lyle/matrix-led-font/blob/master/src/index.js
