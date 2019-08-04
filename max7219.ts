@@ -1,6 +1,18 @@
 /**
  * Single or Multiple MAX7219 8x8 matrix LED modules
  */
+ 
+enum rotation_direction {
+    //% block="none"
+    none = 0,
+    //% block="clockwise"
+    clockwise = 1,
+    //% block="counter-clockwise"
+    counterclockwise = 2,
+    //% block="180-degree"
+    one_eighty_degree = 3,
+}
+ 
 
 //% weight=10 color=#019b9b icon="\uf121" block="MAX7219 LED"
 namespace max7219_matrix {
@@ -740,15 +752,4 @@ namespace max7219_matrix {
             0b00000010,
             0b00000000]]
 
-}
-
-enum rotation_direction {
-    //% block="none"
-    none = 0,
-    //% block="clockwise"
-    clockwise = 1,
-    //% block="counter-clockwise"
-    counterclockwise = 2,
-    //% block="180-degree"
-    one_eighty_degree = 3,
 }
