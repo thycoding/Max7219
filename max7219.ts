@@ -288,6 +288,46 @@ namespace max7219_matrix {
         for (let i = 0; i < 8; i++) _registerAll(_DIGIT[i], 0)
     }
 
+    /**
+    * Set LEDs of a specific MAX7219s to a pattern from a 8x8 number matrix variable (index 0=farthest on the chain)
+    */
+    //% block="Display 8x8 pattern $newMatrix|on matrix index = $index" index.min=0 blockExternalInputs=true group="4. Set custom LED pattern on matrixs"
+    export function displayLEDsForOne(newMatrix: number[][], index: number) {
+        let columnValue = 0
+        if (newMatrix != null) {
+            if (_rotation != rotation_direction.none) newMatrix = _rotateMatrix(newMatrix) // rotate matrix if needed
+            for (let i = 0; i < 8; i++) {
+                if (newMatrix[i] != null) {
+                    columnValue = 0
+                    for (let j = 0; j < 8; j++) {
+                        if (newMatrix[i][j]) {
+                            // combine row 0-7 status into a byte number (0-255)
+                            columnValue += 2 ** j
+                        }
+                    }
+                    _registerForOne(_DIGIT[i], columnValue, index)
+                }
+            }
+        }
+    }
+
+    /**
+    * Return a empty 8x8 number matrix variable
+    */
+    //% block="Empty 8x8 pattern" group="4. Set custom LED pattern on matrixs"
+    export function getEmptyMatrix() {
+        return [
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+        ]
+    }
+
     // ASCII fonts borrowed from https://github.com/lyle/matrix-led-font/blob/master/src/index.js
 
     let font = [" ", "!", "\"", "#", "$", "%", "&", "\'", "(", ")",
