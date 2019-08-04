@@ -252,14 +252,6 @@ namespace max7219_matrix {
         }
     }
 
-    /**
-    * Turn on or off all MAX7219s
-    */
-    //% block="Turn on all matrixs $status" status.defl=true group="3. Basic light control" advanced=true
-    export function togglePower(status: boolean) {
-        if (status) _registerAll(_SHUTDOWN, 1)
-        else _registerAll(_SHUTDOWN, 0)
-    }
 
     /**
     * Set brightness level of LEDs on all MAX7219s
@@ -269,13 +261,6 @@ namespace max7219_matrix {
         _registerAll(_INTENSITY, level)
     }
 
-    /**
-    * Set brightness level of LEDs on a specific MAX7219s (index 0=farthest on the chain)
-    */
-    //% block="Set brightness level $level on matrix index = $index" level.min=0 level.max=15 level.defl=15 index.min=0 group="3. Basic light control" advanced=true
-    export function brightnessForOne(level: number, index: number) {
-        _registerForOne(_INTENSITY, level, index)
-    }
 
     /**
     * Turn on all LEDs on all MAX7219s
@@ -285,13 +270,6 @@ namespace max7219_matrix {
         for (let i = 0; i < 8; i++) _registerAll(_DIGIT[i], 255)
     }
 
-    /**
-    * Turn on LEDs on a specific MAX7219
-    */
-    //% block="Fill LEDs on matrix index = $index" index.min=0 group="3. Basic light control" advanced=true
-    export function fillForOne(index: number) {
-        for (let i = 0; i < 8; i++) _registerForOne(_DIGIT[i], 255, index)
-    }
 
     /**
     * Turn off LEDs on all MAX7219s
@@ -301,29 +279,6 @@ namespace max7219_matrix {
         for (let i = 0; i < 8; i++) _registerAll(_DIGIT[i], 0)
     }
 
-    /**
-    * Turn off LEDs on a specific MAX7219 (index 0=farthest on the chain)
-    */
-    //% block="Clear LEDs on matrix index = $index" index.min=0 group="3. Basic light control" advanced=true
-    export function clearForOne(index: number) {
-        for (let i = 0; i < 8; i++) _registerForOne(_DIGIT[i], 0, index)
-    }
-
-    /**
-    * Turn on LEDs randomly on all MAX7219s
-    */
-    //% block="Randomize all LEDs" index.min=0 group="3. Basic light control"
-    export function randomizeAll() {
-        for (let i = 0; i < 8; i++) _registerAll(_DIGIT[i], Math.randomRange(0, 255))
-    }
-
-    /**
-    * Turn on LEDs randomly on a specific MAX7219 (index 0=farthest on the chain)
-    */
-    //% block="Randomize LEDs on matrix index = $index" index.min=0 group="3. Basic light control" advanced=true
-    export function randomizeForOne(index: number) {
-        for (let i = 0; i < 8; i++) _registerForOne(_DIGIT[i], Math.randomRange(0, 255), index)
-    }
 
     /**
     * Set LEDs of all MAX7219s to a pattern from a 8x8 matrix variable (index 0=farthest on the chain)
